@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Tracker</title>
+</head>
+
+<body>
+
+    <h1>Savings Tracker</h1>
+
+    <input type="text" id="monthlySavings" placeholder="Monthly savings amount">
+
+    <input type="text" id="savingsGoal" placeholder="Savings goal">
+
+    <button onclick="trackSavings()">Track My Savings</button>
+
+    <div id="result"></div>
+
+
+</body>
+
+</html>
+
+
+<script>
+    function trackSavings() {
+
+        let monthlySavings = document.getElementById("monthlySavings").value;
+        let savingsGoal = document.getElementById("savingsGoal").value;
+
+        // Check if inputs are empty
+        if (monthlySavings.trim() === "" || savingsGoal.trim() === "") {
+            document.getElementById("result").innerHTML =
+                `<p>Please enter valid numbers</p>`;
+            return;
+        }
+
+        // Convert inputs to numbers
+        monthlySavings = Number(monthlySavings);
+        savingsGoal = Number(savingsGoal);
+
+        // Check if inputs are numbers
+        if (isNaN(monthlySavings) || isNaN(savingsGoal)) {
+            document.getElementById("result").innerHTML =
+                `<p>Please enter valid numbers</p>`;
+            return;
+        }
+
+        let totalSaved = 0;
+        let output = "";
+        let goalReached = false;
+
+        // Simulate 12 months
+        for (let month = 1; month <= 12; month++) {
+
+            totalSaved += monthlySavings;
+
+            if (totalSaved >= savingsGoal && goalReached === false) {
+
+                output += `<p>Month ${month}: ${totalSaved} saved — Goal reached!</p>`;
+
+                goalReached = true;
+
+            } else {
+
+                output += `<p>Month ${month}: ${totalSaved} saved</p>`;
+
+            }
+        }
+
+        // Final summary
+        if (goalReached) {
+
+            output += `<p>After 12 months, you saved ${totalSaved} and reached your savings goal.</p>`;
+
+        } else {
+
+            output += `<p>After 12 months, you saved ${totalSaved} and did not reach your savings goal.</p>`;
+
+        }
+
+        // Display everything on the page
+        document.getElementById("result").innerHTML = output;
+    }
+</script>
